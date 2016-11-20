@@ -12,6 +12,13 @@ bot.on("message", msg => {
         msg.channel.sendMessage("Please don't actually");
     }
 
+    else if (msg.content.startsWith("me_irl")) {
+        request("https://www.reddit.com/r/me_irl/top.json" + size, function(error, response, body) {
+            cnt = JSON.parse(body).content
+            msg.channel.sendMessage(cnt["data"]["url"])
+        });
+    }
+
 });
 
 bot.on('ready', () => {
