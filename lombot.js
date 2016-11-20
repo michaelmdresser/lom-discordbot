@@ -8,7 +8,7 @@ bot.on("message", msg => {
 
     if (msg.author.bot) return;
 
-    else if (msg.content.contains("kys")) {
+    else if (msg.content.includes("kys")) {
         msg.channel.sendMessage("Please don't actually");
     }
 
