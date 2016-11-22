@@ -21,6 +21,10 @@ bot.on("message", msg => {
         });
     }
 
+    if (msg.content.includes("sko buffs")) {
+        msg.channel.sendMessage("Fight CU down the field,\nCU must win\nFight, fight for victory\nCU knows no defeat\nWe'll roll up a mighty score\nNever give in\nShoulder to shoulder\nWe will fight, fight\nFight, fight, fight!");
+    }
+
 });
 
 bot.on('ready', () => {
