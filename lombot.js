@@ -29,6 +29,10 @@ bot.on("message", msg => {
         msg.channel.sendMessage("Fuck Penn State");
     }
 
+    if (msg.content.includes("fuck penn state")) {
+        msg.channel.sendMessage("Fight on for dear old Pittsburgh\nAnd for the glory of the game\nShow our worthy foe that the Panther's on the go\nPitt must win today! Rah! Rah! Rah!\nCheer loyal sons of Pittsburgh\nCheer on to victory and fame\nFor the Blue and gold shall conquer as of old\nSo fight, Pitt, fight!");
+    }
+
 });
 
 bot.on('ready', () => {
