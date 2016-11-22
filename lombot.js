@@ -26,7 +26,7 @@ bot.on("message", msg => {
     }
 
     if (msg.content.includes("gopitt")) {
-        msg.channel.sendMessage("Fuck Penn Stage");
+        msg.channel.sendMessage("Fuck Penn State");
     }
 
 });
