@@ -25,6 +25,10 @@ bot.on("message", msg => {
         msg.channel.sendMessage("Fight CU down the field,\nCU must win\nFight, fight for victory\nCU knows no defeat\nWe'll roll up a mighty score\nNever give in\nShoulder to shoulder\nWe will fight, fight\nFight, fight, fight!");
     }
 
+    if (msg.content.includes("gopitt")) {
+        msg.channel.sendMessage("Fuck Penn Stage");
+    }
+
 });
 
 bot.on('ready', () => {
