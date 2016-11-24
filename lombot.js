@@ -39,6 +39,10 @@ bot.on("message", msg => {
         msg.channel.sendMessage("Please don't actually");
     }
 
+    else if (msg.content.includes("should i do it")) {
+        msg.channel.sendMessage("do it");
+    }
+
     else if (msg.content.startsWith("me_irl")) {
         request("https://www.reddit.com/r/me_irl/top.json", function(error, response, body) {
             cnt = JSON.parse(body)
@@ -50,10 +54,6 @@ bot.on("message", msg => {
 
     if (msg.content.includes("sko buffs")) {
         msg.channel.sendMessage("Fight CU down the field,\nCU must win\nFight, fight for victory\nCU knows no defeat\nWe'll roll up a mighty score\nNever give in\nShoulder to shoulder\nWe will fight, fight\nFight, fight, fight!");
-    }
-
-    if (msg.content.includes("should i do it")) {
-        msg.channel.sendMessage("do it");
     }
 
     if (msg.content.includes("gopitt")) {
