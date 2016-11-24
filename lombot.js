@@ -17,7 +17,6 @@ bot.on("message", msg => {
         if (space != -1) {
             spl[1] = spl[1].substring(0, space);
         }
-        console.log(spl);
         var sum = 0;
         var first = Number(spl[0]);
         var second = Number(spl[1]);
