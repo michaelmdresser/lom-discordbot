@@ -67,6 +67,10 @@ bot.on("message", msg => {
         msg.channel.sendMessage("eyy");
     }
 
+    if (msg.content.includes("greenwald")) {
+        msg.channel.sendMessage("SOMETHING FUNNY");
+    }
+
 });
 
 bot.on('ready', () => {
