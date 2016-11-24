@@ -6,6 +6,8 @@ bot.on("message", msg => {
 
     let prefix = "!";
 
+    msg.content = msg.content.toLowerCase();
+
     if (msg.author.bot) return;
 
     else if (msg.content.includes("kys")) {
