@@ -10,6 +10,23 @@ bot.on("message", msg => {
 
     if (msg.author.bot) return;
 
+    else if (msg.content.startsWith(prefix) && msg.content.includes("d")) {
+        spl = msg.content.split("d");
+        if (spl.length == 1 && msg.content[1] == "d" && Number(spl[0]) != NaN) {
+            msg.channel.sendMessage(Math.ceiling(Math.random() * Number(spl[0])));
+        } else if (spl.length == 2) {
+            var sum = 0
+            first = Number(spl[0])
+            second = Number[spl[1]]
+            if (first != NaN && second != NaN) {
+                for (i = 0; i < first; i++) {
+                    sum += Math.ceiling(Math.random() * second);
+                }
+            }
+            msg.channel.sendMessage(sum);
+        }
+    }
+
     else if (msg.content.includes("kys")) {
         msg.channel.sendMessage("Please don't actually");
     }
