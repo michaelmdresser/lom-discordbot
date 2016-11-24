@@ -68,7 +68,7 @@ bot.on("message", msg => {
     }
 
     if (msg.content.includes("greenwald")) {
-        msg.channel.sendMessage("SOMETHING FUNNY");
+        msg.channel.sendMessage("SOMETHING FUNNY, also: The Goblin Hunter");
     }
 
 });
