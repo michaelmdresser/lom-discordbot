@@ -43,7 +43,7 @@ bot.on("message", msg => {
     }
 
     else if (msg.content.startsWith("me_irl")) {
-        request("https://www.reddit.com/r/me_irl/top.json", function(error, response, body) {
+        request("https://www.reddit.com/r/wholesomememes/top.json", function(error, response, body) {
             cnt = JSON.parse(body)
             url = cnt["data"]["children"][0]["data"]["url"]
             fixed = url.replace(/&amp;/g, "&")
