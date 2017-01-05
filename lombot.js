@@ -43,18 +43,20 @@ bot.on("message", msg => {
     }
 
     else if (msg.content.startsWith("me_irl")) {
+        randpos = Math.floor(Math.random() * 25);
         request("https://www.reddit.com/r/wholesomememes/top.json", function(error, response, body) {
             cnt = JSON.parse(body)
-            url = cnt["data"]["children"][0]["data"]["url"]
+            url = cnt["data"]["children"][randpos]["data"]["url"]
             fixed = url.replace(/&amp;/g, "&")
             msg.channel.sendMessage(fixed)
         });
     }
     
     else if (msg.content.startsWith("anime_irl")) {
+        randpos = Math.floor(Math.random() * 25);
         request("https://www.reddit.com/r/anime_irl/top.json", function(error, response, body) {
             cnt = JSON.parse(body)
-            url = cnt["data"]["children"][0]["data"]["url"]
+            url = cnt["data"]["children"][randpos]["data"]["url"]
             fixed = url.replace(/&amp;/g, "&")
             msg.channel.sendMessage(fixed)
         });
