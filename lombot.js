@@ -50,6 +50,15 @@ bot.on("message", msg => {
             msg.channel.sendMessage(fixed)
         });
     }
+    
+    else if (msg.content.startsWith("anime_irl")) {
+        request("https://www.reddit.com/r/anime_irl/top.json", function(error, response, body) {
+            cnt = JSON.parse(body)
+            url = cnt["data"]["children"][0]["data"]["url"]
+            fixed = url.replace(/&amp;/g, "&")
+            msg.channel.sendMessage(fixed)
+        });
+    }
 
     if (msg.content.includes("sko buffs")) {
         msg.channel.sendMessage("Fight CU down the field,\nCU must win\nFight, fight for victory\nCU knows no defeat\nWe'll roll up a mighty score\nNever give in\nShoulder to shoulder\nWe will fight, fight\nFight, fight, fight!");
