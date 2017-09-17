@@ -4,6 +4,7 @@ import asyncio
 import requests
 import sys
 import random
+import re
 
 client = discord.Client()
 
@@ -25,8 +26,10 @@ async def on_message(message):
 
     if "kys" in message.content:
         await client.send_message(message.channel, "Please don't actually")
-    elif "should i do it" in message.content:
+    elif re.search("should .+ do it", message.content) is not None:
         await client.send_message(message.channel, "do it")
+    elif re.search("should .+ play.+", message.content) is not None:
+        await client.send_message(message.channel, "play it")
     elif message.content.startswith("!reddit "):
         subreddit = message.content[8:]
         try:
