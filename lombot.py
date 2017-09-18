@@ -7,6 +7,12 @@ import random
 import re
 
 client = discord.Client()
+sub_blacklist = []
+
+def read_blacklist():
+    f = open("blacklist.txt", "r")
+    for line in f:
+        sub_blacklist.append(line.strip())
 
 def subreddit_json_top(subreddit, t="day"):
     url = "https://www.reddit.com/r/" + subreddit + "/top/.json?t=" + t
@@ -18,6 +24,10 @@ def subreddit_json_top(subreddit, t="day"):
     return response.json(), post_count
 
 def random_from_subreddit(subreddit):
+    if subreddit in sub_blacklist:
+        print("Subreddit {" + subreddit + "} denied, on blacklist")
+        return "Blacklisted subreddit"
+
     rjson, post_count = subreddit_json_top(subreddit)
 
     if (post_count < 5):
@@ -58,4 +68,6 @@ async def on_message(message):
         await client.send_message(message.channel, random_from_subreddit(subreddit))
 
 if __name__ == "__main__":
+    read_blacklist()
+    print(sub_blacklist)
     client.run(sys.argv[1])
