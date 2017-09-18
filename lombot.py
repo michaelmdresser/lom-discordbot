@@ -14,6 +14,7 @@ def random_from_subreddit(subreddit):
     post_position = random.randrange(0, 25)
 
     response = requests.get(url, headers=h)
+    print(length(response.json()["data"]["children"]))
     response_url = response.json()["data"]["children"][post_position]["data"]["url"]
 
     return response_url
@@ -32,10 +33,7 @@ async def on_message(message):
         await client.send_message(message.channel, "play it")
     elif message.content.startswith("!reddit "):
         subreddit = message.content[8:]
-        try:
-            await client.send_message(message.channel, random_from_subreddit(subreddit))
-        except Exception as e:
-            client.send_message(message.channel, "I don't understand that request")
+        await client.send_message(message.channel, random_from_subreddit(subreddit))
     elif message.content == "anime_irl":
         subreddit = "anime_irl"
         await client.send_message(message.channel, random_from_subreddit(subreddit))
