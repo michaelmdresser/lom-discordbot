@@ -35,9 +35,6 @@ def random_from_subreddit(subreddit):
         if re.search(pattern, subreddit) is not None:
             print("Subreddit {" + subreddit + "} matches blacklisted pattern {" + pattern + "}")
             return "Blacklisted pattern"
-    if subreddit in sub_blacklist:
-        print("Subreddit {" + subreddit + "} denied, on blacklist")
-        return "Blacklisted subreddit"
 
     rjson, post_count = subreddit_json_top(subreddit)
 
@@ -67,7 +64,7 @@ async def on_message(message):
 
     if message.content.startswith("!redditblacklist") and message.author.roles:
         for role in message.author.roles:
-            if role.name = "admin":
+            if role.name == "admin":
                 add_to_blacklist(message.content[17:].strip())
                 break
     elif "kys" in message.content:
