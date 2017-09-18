@@ -9,7 +9,7 @@ import re
 client = discord.Client()
 
 def random_from_subreddit(subreddit):
-    url = "https://www.reddit.com/r/" + subreddit + "/hot/.json"
+    url = "https://www.reddit.com/r/" + subreddit + "/top/.json"
     h = {"User-Agent": "lombot v1"}
     post_position = random.randrange(0, 25)
 
