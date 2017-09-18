@@ -8,16 +8,35 @@ import re
 
 client = discord.Client()
 
-def random_from_subreddit(subreddit):
-    url = "https://www.reddit.com/r/" + subreddit + "/top/.json"
+def subreddit_json_top(subreddit, t=None):
+    url = "https://www.reddit.com/r/" + subreddit + "/top"
     h = {"User-Agent": "lombot v1"}
+    if t is not None:
+        h["t"] = t
 
     response = requests.get(url, headers=h)
-
     post_count = len(response.json()["data"]["children"])
+
+    return response.json(), post_count
+
+def random_from_subreddit(subreddit):
+    rjson, post_count = subreddit_json_top(subreddit)
+
+    if (post_count < 5):
+        rjson, post_count = subreddit_json_top(subreddit, t="week")
+
+    if (post_count < 5):
+        rjson, post_count = subreddit_json_top(subreddit, t="month")
+
+    if (post_count < 5):
+        rjson, post_count = subreddit_json_top(subreddit, t="year")
+
+    if (post_count < 5):
+        rjson, post_count = subreddit_json_top(subreddit, t="all")
+
     post_position = random.randrange(0, post_count)
 
-    response_url = response.json()["data"]["children"][post_position]["data"]["url"]
+    response_url = rjson["data"]["children"][post_position]["data"]["url"]
 
     return response_url
 
