@@ -17,7 +17,7 @@ def read_blacklist():
 
 def add_to_blacklist(pattern):
     sub_blacklist.append(pattern)
-    f = open("blacklist.txt", "w")
+    f = open("blacklist.txt", "a")
     f.write("\n" + pattern)
     f.close()
 
