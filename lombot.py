@@ -18,7 +18,7 @@ def read_blacklist():
 def add_to_blacklist(pattern):
     sub_blacklist.append(pattern)
     f = open("blacklist.txt", "a")
-    f.write("\n" + pattern)
+    f.write(pattern + "\n")
     f.close()
 
 def subreddit_json_top(subreddit, t="day"):
