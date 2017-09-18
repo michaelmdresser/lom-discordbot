@@ -24,6 +24,10 @@ def subreddit_json_top(subreddit, t="day"):
     return response.json(), post_count
 
 def random_from_subreddit(subreddit):
+    for pattern in sub_blacklist:
+        if re.search(pattern, subreddit) is not None:
+            print("Subreddit {" + subreddit + "} matches blacklisted pattern {" + pattern + "}")
+            return "Blacklisted pattern"
     if subreddit in sub_blacklist:
         print("Subreddit {" + subreddit + "} denied, on blacklist")
         return "Blacklisted subreddit"
