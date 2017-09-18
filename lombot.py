@@ -8,11 +8,9 @@ import re
 
 client = discord.Client()
 
-def subreddit_json_top(subreddit, t=None):
-    url = "https://www.reddit.com/r/" + subreddit + "/top/.json"
+def subreddit_json_top(subreddit, t="day"):
+    url = "https://www.reddit.com/r/" + subreddit + "/top/.json?t=" + t
     h = {"User-Agent": "lombot v1"}
-    if t is not None:
-        h["t"] = t
 
     response = requests.get(url, headers=h)
     post_count = len(response.json()["data"]["children"])
