@@ -9,7 +9,7 @@ import re
 client = discord.Client()
 
 def subreddit_json_top(subreddit, t=None):
-    url = "https://www.reddit.com/r/" + subreddit + "/top"
+    url = "https://www.reddit.com/r/" + subreddit + "/top/.json"
     h = {"User-Agent": "lombot v1"}
     if t is not None:
         h["t"] = t
