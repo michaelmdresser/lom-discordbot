@@ -11,10 +11,12 @@ client = discord.Client()
 def random_from_subreddit(subreddit):
     url = "https://www.reddit.com/r/" + subreddit + "/top/.json"
     h = {"User-Agent": "lombot v1"}
-    post_position = random.randrange(0, 25)
 
     response = requests.get(url, headers=h)
-    print(len(response.json()["data"]["children"]))
+
+    post_count = len(response.json()["data"]["children"])
+    post_position = random.randrange(0, post_count)
+
     response_url = response.json()["data"]["children"][post_position]["data"]["url"]
 
     return response_url
