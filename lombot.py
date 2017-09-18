@@ -14,7 +14,7 @@ def random_from_subreddit(subreddit):
     post_position = random.randrange(0, 25)
 
     response = requests.get(url, headers=h)
-    print(length(response.json()["data"]["children"]))
+    print(len(response.json()["data"]["children"]))
     response_url = response.json()["data"]["children"][post_position]["data"]["url"]
 
     return response_url
