@@ -54,8 +54,9 @@ def random_from_subreddit(subreddit):
 
     response_url = rjson["data"]["children"][post_position]["data"]["url"]
     response_title = rjson["data"]["children"][post_position]["data"]["title"]
+    response_permalink = "https://www.reddit.com" + rjson["data"]["children"][post_position]["data"]["permalink"]
 
-    return response_url, response_title
+    return response_url, response_title, response_permalink
 
 @client.event
 async def on_message(message):
@@ -80,12 +81,12 @@ async def on_message(message):
         await client.send_message(message.channel, "play it")
     elif message.content.startswith("!reddit "):
         subreddit = message.content[8:]
-        post_url, post_title = random_from_subreddit(subreddit)
-        await client.send_message(message.channel, post_title + "\n" + post_url)
+        post_url, post_title, post_permalink = random_from_subreddit(subreddit)
+        await client.send_message(message.channel, post_title + "\n" + post_url + "\n\n Permalink: " + post_permalink)
     elif message.content == "anime_irl":
         subreddit = "anime_irl"
-        post_url, post_title = random_from_subreddit(subreddit)
-        await client.send_message(message.channel, post_title + "\n" + post_url)
+        post_url, post_title, post_permalink = random_from_subreddit(subreddit)
+        await client.send_message(message.channel, post_title + "\n" + post_url + "\n\n Permalink: " + post_permalink)
 
 if __name__ == "__main__":
     read_blacklist()
