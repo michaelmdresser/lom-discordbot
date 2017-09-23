@@ -82,11 +82,9 @@ async def on_message(message):
     elif message.content.startswith("!reddit "):
         subreddit = message.content[8:]
         post_url, post_title, post_permalink = random_from_subreddit(subreddit)
-        await client.send_message(message.channel, post_title + "\n" + post_url + "\n\n Permalink: " + post_permalink)
-    elif message.content == "anime_irl":
-        subreddit = "anime_irl"
-        post_url, post_title, post_permalink = random_from_subreddit(subreddit)
-        await client.send_message(message.channel, post_title + "\n" + post_url + "\n\n Permalink: " + post_permalink)
+        embed=discord.Embed(title=post_title, url=post_permalink)
+        await client.send_message(message.channel, embed=embed)
+        await client.send_message(message.channel, post_url)
 
 if __name__ == "__main__":
     read_blacklist()
