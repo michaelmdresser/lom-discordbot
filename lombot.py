@@ -67,6 +67,9 @@ async def on_message(message):
     kms_pattern = "k.{,10}m.{.10}s"
     suicide_pattern = "suicide"
 
+    if message.author.bot:
+        return
+
     if message.content.startswith("!redditblacklist") and message.author.roles:
         for role in message.author.roles:
             if role.name == "admin":
