@@ -63,9 +63,10 @@ async def on_message(message):
     message.content = message.content.lower()
 
     prefix = "!"
-    kys_pattern = "k.{,10}y.{,10}s"
-    kms_pattern = "k.{,10}m.{.10}s"
+    kys_pattern = r'k\s*y\s*s'
+    kms_pattern = r'k\s*m\s*s'
     suicide_pattern = "suicide"
+
 
     if message.author.bot:
         return
