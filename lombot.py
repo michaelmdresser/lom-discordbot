@@ -63,8 +63,9 @@ async def on_message(message):
     message.content = message.content.lower()
 
     prefix = "!"
-    kys_pattern = "k\s?y\s?s"
-    kms_pattern = "k\s?m\s?s"
+    kys_pattern = "k.{,10}y.{,10}s"
+    kms_pattern = "k.{,10}m.{.10}s"
+    suicide_pattern = "suicide"
 
     if message.content.startswith("!redditblacklist") and message.author.roles:
         for role in message.author.roles:
@@ -72,9 +73,11 @@ async def on_message(message):
                 add_to_blacklist(message.content[17:].strip())
                 break
     elif re.search(kys_pattern, message.content) is not None or "kill yourself" in message.content:
-        await client.send_message(message.channel, "Please don't actually")
+        await client.send_message(message.channel, "Please don't actually kill yourself")
     elif re.search(kms_pattern, message.content) is not None or "kill myself" in message.content:
-        await client.send_message(message.channel, "Please don't actually")
+        await client.send_message(message.channel, "Please don't actually kill yourself")
+    elif re.search(suicide_pattern, message.content) is not None:
+        await client.send_message(message.channel, "Please don't actually kill yourself")
     elif re.search("should .+ do it", message.content) is not None:
         await client.send_message(message.channel, "do it")
     elif re.search("should .+ play.+", message.content) is not None:
