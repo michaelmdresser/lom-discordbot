@@ -84,13 +84,13 @@ def random_from_subreddit(subreddit):
 
 @client.event
 async def on_message(message):
-    logger.info("received message: %s" % message)
+    if message.author.bot:
+        return
+
+    logger.info("received message with content: %s" % message.content)
     message.content = message.content.lower()
 
     prefix = "!"
-
-    if message.author.bot:
-        return
 
     if message.content.startswith("!redditblacklist") and message.author.roles:
         for role in message.author.roles:
