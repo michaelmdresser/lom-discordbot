@@ -118,7 +118,7 @@ async def on_message(message):
         await client.send_message(message.channel, embed=embed)
 
 if __name__ == "__main__":
-    logger.setLevel(logging.info)
+    logger.setLevel(logging.INFO)
 
     read_blacklist()
     print(sub_blacklist)
