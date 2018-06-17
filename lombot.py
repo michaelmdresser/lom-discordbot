@@ -84,6 +84,7 @@ def random_from_subreddit(subreddit):
 
 @client.event
 async def on_message(message):
+    logger.info("received message: %s" % message)
     message.content = message.content.lower()
 
     prefix = "!"
