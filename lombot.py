@@ -119,6 +119,11 @@ async def on_message(message):
 
 if __name__ == "__main__":
     logger.setLevel(logging.INFO)
+    sh = logging.StreamHandler(sys.stdout)
+    sh.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    sh.setFormatter(formatter)
+    logger.addHandler(sh)
 
     read_blacklist()
     print(sub_blacklist)
