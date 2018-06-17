@@ -5,22 +5,27 @@ import requests
 import sys
 import random
 import re
+import logging
 
 client = discord.Client()
+logger = logging.getLogger(__name__)
 sub_blacklist = []
 permalink_hashes = set()
 
 def read_blacklist():
     f = open("blacklist.txt", "r")
+    logger.info("opened blacklist.txt")
     for line in f:
         sub_blacklist.append(line.strip())
     f.close()
+    logger.info("finished reading blacklist.txt")
 
 def add_to_blacklist(pattern):
     sub_blacklist.append(pattern)
     f = open("blacklist.txt", "a")
     f.write(pattern + "\n")
     f.close()
+    logger.info("added %s to blacklist" % pattern)
 
 def subreddit_json_top(subreddit, t="day"):
     url = "https://www.reddit.com/r/" + subreddit + "/top/.json?t=&limit=20" + t
@@ -29,11 +34,11 @@ def subreddit_json_top(subreddit, t="day"):
     response = requests.get(url, headers=h)
     response_children = response.json()["data"]["children"]
 
-#    unused_children = [ child for child in response_children if child["data"]["permalink"] not in permalink_hashes ]
-    unused_children = []
-    for child in response_children:
-        if "https://www.reddit.com" + child["data"]["permalink"] not in permalink_hashes:
-            unused_children.append(child)
+    unused_children = [ child for child in response_children if "https://www.reddit.com" + child["data"]["permalink"] not in permalink_hashes ]
+    # unused_children = []
+    # for child in response_children:
+    #     if "https://www.reddit.com" + child["data"]["permalink"] not in permalink_hashes:
+    #         unused_children.append(child)
     post_count = len(unused_children)
 
     return unused_children, post_count
@@ -41,33 +46,32 @@ def subreddit_json_top(subreddit, t="day"):
 def random_from_subreddit(subreddit):
     for pattern in sub_blacklist:
         if re.search(pattern, subreddit) is not None:
-            print("Subreddit {" + subreddit + "} matches blacklisted pattern {" + pattern + "}")
+            logger.info("Subreddit {" + subreddit + "} matches blacklisted pattern {" + pattern + "}")
             return None, None, None, None
 
-    print("trying top day")
+    logger.info("trying top day")
     unused_children, post_count = subreddit_json_top(subreddit, t="day")
 
     if (post_count < 1):
-        print("trying top week")
+        logger.info("trying top week")
         unused_children, post_count = subreddit_json_top(subreddit, t="week")
 
     if (post_count < 1):
-        print("trying top month")
+        logger.info("trying top month")
         unused_children, post_count = subreddit_json_top(subreddit, t="month")
 
     if (post_count < 1):
-        print("trying top year")
+        logger.info("trying top year")
         unused_children, post_count = subreddit_json_top(subreddit, t="year")
 
     if (post_count < 1):
-        print("trying top all")
+        logger.info("trying top all")
         unused_children, post_count = subreddit_json_top(subreddit, t="all")
 
     if (post_count < 1):
-        print("no posts on sub?")
+        logger.info("no posts on sub?")
         return None, None, None, None
 
-#    post_position = random.randrange(0, post_count)
     post = unused_children[random.randrange(0, post_count)]
 
     response_url = post["data"]["url"]
@@ -107,13 +111,15 @@ async def on_message(message):
             return
         embed = discord.Embed(title=post_title, url=post_permalink)
         if "imgur.com" in post_url or "i.redd.it" in post_url or "v.redd.it" in post_url or "gfycat.com" in post_url or "giphy" in post_url:
-            print("image/gif link detected")
+            logger.info("image/gif link detected")
             embed = embed.set_image(url=post_url)
-        print("sending permalink: %s\n\npermalink_hashes is before add: %s\n\npermalink in hashes? %s\n\n" % (post_permalink, permalink_hashes, post_permalink in permalink_hashes))
+        logger.debug("sending permalink: %s\n\npermalink_hashes is before add: %s\n\npermalink in hashes? %s\n\n" % (post_permalink, permalink_hashes, post_permalink in permalink_hashes))
         permalink_hashes.add(post_permalink)
         await client.send_message(message.channel, embed=embed)
 
 if __name__ == "__main__":
+    logger.setLevel(logging.info)
+
     read_blacklist()
     print(sub_blacklist)
     client.run(sys.argv[1])
