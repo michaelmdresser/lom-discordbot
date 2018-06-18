@@ -129,13 +129,25 @@ async def on_message(message):
         if over_18 and message.channel.name != "nsfw":
             await client.send_message(message.channel, "NSFW links not allowed outside of nsfw channel")
             return
+
         embed = discord.Embed(title=post_title, url=post_permalink, description=post_selftext)
-        if "imgur.com" in post_url or "i.redd.it" in post_url or "v.redd.it" in post_url or "gfycat.com" in post_url or "giphy" in post_url:
+        send_link = False
+
+        if "youtu.be" in post_url or "youtube" in post_url:
+            logger.info("youtube link detected")
+            send_link = True
+#            embed = discord.Embed(title=post_title, url=post_permalink, description=post_selftext, video=post_url)
+        elif "imgur.com" in post_url or "i.redd.it" in post_url or "v.redd.it" in post_url or "gfycat.com" in post_url or "giphy" in post_url:
             logger.info("image/gif link detected")
-            embed = embed.set_image(url=post_url)
+            send_link = True
+#            embed = embed.set_image(url=post_url)
+
         logger.debug("sending permalink: %s\n\npermalink_hashes is before add: %s\n\npermalink in hashes? %s\n\n" % (post_permalink, permalink_hashes, post_permalink in permalink_hashes))
+
         permalink_hashes.add(post_permalink)
         await client.send_message(message.channel, embed=embed)
+        if send_link:
+            await client.send_message(message.channel, post_url)
 
 if __name__ == "__main__":
     logger.setLevel(logging.INFO)
