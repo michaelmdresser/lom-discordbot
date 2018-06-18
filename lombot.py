@@ -104,6 +104,10 @@ async def on_message(message):
     if message.author.bot:
         return
 
+    if message.channel.name != "nsfw" and message.channel.name != "botspam":
+        await client.send_message(message.channel, "Bot messages only allowed in \"nsfw\" and \"botspam\" channels")
+        return
+
     logger.info("received message with content: %s" % message.content)
     message.content = message.content.lower()
 
@@ -127,7 +131,7 @@ async def on_message(message):
         if not success:
             return
         if over_18 and message.channel.name != "nsfw":
-            await client.send_message(message.channel, "NSFW links not allowed outside of nsfw channel")
+            await client.send_message(message.channel, "NSFW links not allowed outside of \"nsfw\" channel")
             return
 
         embed = discord.Embed(title=post_title, url=post_permalink, description=post_selftext)
