@@ -104,14 +104,15 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    if message.channel.name != "nsfw" and message.channel.name != "botspam":
-        await client.send_message(message.channel, "Bot messages only allowed in \"nsfw\" and \"botspam\" channels")
-        return
 
     logger.info("received message with content: %s" % message.content)
     message.content = message.content.lower()
 
     prefix = "!"
+
+    if message.content.startswith(prefix) and message.channel.name != "nsfw" and message.channel.name != "botspam":
+        await client.send_message(message.channel, "Bot messages only allowed in \"nsfw\" and \"botspam\" channels")
+        return
 
     if message.content.startswith("!redditblacklist") and message.author.roles:
         for role in message.author.roles:
